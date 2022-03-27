@@ -1,9 +1,9 @@
 export const LIST_USER = [
   {
     createdAt: 1648306849,
-    fullName: 'Hoàng Quốc Khánh',
+    fullName: 'KhanhHQ',
     avatar: 'avatar',
-    email: 'kitinkhanh',
+    email: 'kitinkhanh@gmail.com',
     password: '123456789',
     leadId: '',
     idCategory: [

@@ -52,10 +52,20 @@ class Sidebar extends Component {
         this.setState({[obj.state] : true})
       }
     }));
- 
+  }
+
+  handleDisplayRole(role){
+    let result = {
+      GIAM_DOC: 'Giám Đốc',
+      TRUONG_PHONG: 'Trưởng Phòng',
+      NHAN_VIEN: 'Nhân viên',
+      default: '',
+    }
+    return result[role] || result['default'];
   }
 
   render () {
+    console.log(this.state);
     return (
       <nav className="sidebar sidebar-offcanvas" id="sidebar">
         <ul className="nav">
@@ -66,8 +76,8 @@ class Sidebar extends Component {
                 <span className="login-status online"></span> {/* change to offline or busy as needed */}
               </div>
               <div className="nav-profile-text">
-                <span className="font-weight-bold mb-2"><Trans>KhanhHQ</Trans></span>
-                <span className="text-secondary text-small"><Trans>Giám Đốc</Trans></span>
+                <span className="font-weight-bold mb-2"><Trans>{this.state.user && this.state.user.fullName}</Trans></span>
+                <span className="text-secondary text-small"><Trans>{this.state.user && this.handleDisplayRole(this.state.user.role)}</Trans></span>
               </div>
               <i className="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
             </a>
@@ -213,6 +223,11 @@ class Sidebar extends Component {
   }
 
   componentDidMount() {
+    let user = JSON.parse(localStorage.getItem('user'));
+    console.log(user);
+    this.setState({user: user});
+
+    
     this.onRouteChanged();
     // add class 'hover-open' to sidebar navitem while hover in sidebar-icon-only menu
     const body = document.querySelector('body');
