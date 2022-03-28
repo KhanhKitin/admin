@@ -25,10 +25,10 @@ export const LIST_REGION = [
   },
   {
     name: 'Đồng Bằng Sông Cửu Long',
-    id: '5',
+    id: '7',
   },
   {
     name: 'Đông Nam Bộ',
-    id: '6',
+    id: '8',
   },
 ];

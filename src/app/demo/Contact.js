@@ -1,39 +1,32 @@
 import React, { Component, useState } from 'react';
-
-const zonesData = [
-  { id: 1, name: 'Bắc', code: 'b' },
-  { id: 2, name: 'Trung', code: 't' },
-  { id: 3, name: 'Nam', code: 'n' },
-];
+import { Form } from 'react-bootstrap';
+import { LIST_CATEGORY } from '../../contants/ListCategory';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const citiesData = [
-  { id: 1, name: 'Hà Nội', code: 'ha_noi', zone: 'b' },
-  { id: 2, name: 'Ninh Bình', code: 'ninh_binh', zone: 'b' },
-  { id: 3, name: 'Thái Bình', code: 'thai_binh', zone: 'b' },
-  { id: 4, name: 'Thanh Hoá', code: 'thanh_hoa', zone: 't' },
-  { id: 5, name: 'Nghệ An', code: 'nghe_an', zone: 't' },
-  { id: 6, name: 'Hà Tĩnh', code: 'ha_tinh', zone: 't' },
-  { id: 7, name: 'Hồ Chí Minh', code: 'ho_chi_minh', zone: 'n' },
-  { id: 8, name: 'Cà Mau', code: 'ca_mau', zone: 'n' },
-  { id: 9, name: 'Vũng Tàu', code: 'vung_tau', zone: 'n' },
+  { id: 1, name: 'Hà Nội', value: 'Hà Nội', region: '3' },
+  { id: 2, name: 'Ninh Bình', value: 'Ninh Bình', region: '3' },
+  { id: 3, name: 'Thái Bình', value: 'Thái Bình', region: '3' },
+  { id: 4, name: 'Thanh Hoá', value: 'Thanh Hoá', region: '4' },
+  { id: 5, name: 'Nghệ An', value: 'Nghệ An', region: '4' },
+  { id: 6, name: 'Hà Tĩnh', value: 'Hà Tĩnh', region: '4' },
+  { id: 7, name: 'Hồ Chí Minh', value: 'Hồ Chí Minh', region: '8' },
+  { id: 8, name: 'Cà Mau', code: 'Cà Mau', region: '7' },
+  { id: 9, name: 'Vũng Tàu', code: 'Vùng Tàu', region: '8' },
 ];
 
 const wardsData = [
-  { id: 1, name: 'Thanh Oai', code: 'thanh_oai', city: 'ha_noi' },
-  { id: 2, name: 'Thạch Thất', code: 'thach_that', city: 'ha_noi' },
-  { id: 3, name: 'Hoa Lư', code: 'hoa_lu', city: 'ninh_binh' },
-  { id: 4, name: 'Kiến Xương', code: 'kien_xuong', city: 'thai_binh' },
-  { id: 5, name: 'Thái Thuỵ', code: 'thai_thuy', city: 'thai_binh' },
-  { id: 6, name: 'Bỉm Sơn', code: 'bim_son', city: 'thanh_hoa' },
-  { id: 7, name: 'Quận 1', code: 'quan_1', city: 'ho_chi_minh' },
-  { id: 5, name: 'Quận 2', code: 'quan_2', city: 'ho_chi_minh' },
-];
-
-const categoriesData = [
-  { id: 1, name: 'Hạng Mục A', code: 'a' },
-  { id: 2, name: 'Hạng Mục B', code: 'b' },
-  { id: 3, name: 'Hạng Mục C', code: 'c' },
-  { id: 4, name: 'Hạng Mục D', code: 'd' },
+  { id: 1, name: 'Ba Vì', code: 'Ba Vì', city: 'Hà Nội' },
+  { id: 2, name: 'Đông Anh', code: 'Đông anh', city: 'Hà Nội' },
+  { id: 3, name: 'Thanh Oai', code: 'Thanh Oai', city: 'Hà Nội' },
+  { id: 4, name: 'Thạch Thất', code: 'Thạch Thất', city: 'Hà Nội' },
+  { id: 5, name: 'Hoa Lư', code: 'Hoa Lư', city: 'Ninh Bình' },
+  { id: 6, name: 'Kiến Xương', code: 'Kiến Xương', city: 'Thái Bình' },
+  { id: 7, name: 'Thái Thuỵ', code: 'Thái Thuỵ', city: 'Thái Bình' },
+  { id: 8, name: 'Bỉm Sơn', code: 'Bỉm Sơn', city: 'Thanh Hoá' },
+  { id: 9, name: 'Quận 1', code: 'Quận 1', city: 'Hồ Chí Minh' },
+  { id: 10, name: 'Quận 2', code: 'Quận 2', city: 'Hồ Chí Minh' },
 ];
 
 const Contact = () => {
@@ -43,208 +36,210 @@ const Contact = () => {
   const [category, setCategory] = useState('');
   const [note, setNote] = useState('');
 
-  const [zone, setZone] = useState('');
   const [city, setCity] = useState('');
   const [ward, setWard] = useState('');
 
-  const [cities, setCities] = useState([]);
   const [wards, setWards] = useState([]);
 
   const handleChangeFullName = (e) => {
     setFullname(e.currentTarget.value);
   };
 
-  const handleChangeEmail = (e) => {
-    setEmail(e.currentTarget.value);
-  };
-
   const handleChangePhone = (e) => {
     setPhone(e.currentTarget.value);
   };
 
-  const handleChangeZone = (e) => {
-    setZone(e.currentTarget.value);
-    setCities(citiesData.filter((city) => city.zone === e.currentTarget.value));
-  };
-
   const handleChangeCity = (e) => {
-    setCity(e.currentTarget.value);
-    setWards(wardsData.filter((ward) => ward.city === e.currentTarget.value));
+    setCity(e.target.value);
+    setWard('');
+    setWards(wardsData.filter((ward) => ward.city === e.target.value));
   };
 
   const handleChangeWard = (e) => {
     setWard(e.currentTarget.value);
   };
 
-  const handleChangesetCategory = (e) => {
-    setCategory(e.currentTarget.value);
-  };
-
-  const handleChangeNote = (e) => {
-    setNote(e.currentTarget.value);
-  };
-
-  const handleSubmitForm = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+    let province = citiesData.find((item) => item.value === city);
+
     const data = {
-      fullname,
       email,
       phone,
-      category,
-      address: { zone, city, ward },
-      note,
+      fullName: fullname,
+      IdCategory: category,
+      contentContact: note,
+      address: `${ward}, ${city}`,
+      IdRegions: province.region,
     };
-    console.log(data);
+    console.log('=====> data nè', data);
+    toast.success('Gửi Thông Tin Thành Công!', {
+      position: 'top-center',
+      autoClose: 5000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      theme: "colored",
+      progress: undefined,
+    });
+    let listCustomer = JSON.parse(localStorage.getItem('customer')) || [];
+    listCustomer.unshift(data);
+    localStorage.setItem('customer', JSON.stringify(listCustomer));
   };
 
   return (
-    <div className='bg-white h-screen flex justify-center items-center'>
-      <form
-        className='w-3/4 max-w-xl border rounded p-5'
-        onSubmit={handleSubmitForm}
-      >
-        <p className='text-slate-500 mb-5'>
-          Nếu bạn có thắc mắc gì muốn được giải đáp vui lòng liên hệ với chúng
-          tôi bằng cách điền vào các thông tin bên dưới
-        </p>
-        <label className='block mb-3'>
-          <span className="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
-            Full Name
-          </span>
-          <input
-            type='text'
-            name='text'
-            value={fullname}
-            onChange={handleChangeFullName}
-            className='mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1'
-          />
-        </label>
-        <label className='block mb-3'>
-          <span className="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
-            Email
-          </span>
-          <input
-            type='email'
-            name='email'
-            value={email}
-            onChange={handleChangeEmail}
-            className='mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1'
-          />
-        </label>
-        <label className='block mb-3'>
-          <span className="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
-            Phone Number
-          </span>
-          <input
-            type='phone'
-            name='phone'
-            value={phone}
-            onChange={handleChangePhone}
-            className='mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1'
-          />
-        </label>
-        <div className='flex justify-between mb-3'>
-          <label className='block mr-5'>
-            <span className="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
-              Vùng
-            </span>
-            <select
-              name='zone'
-              value={zone}
-              className='mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1'
-              onChange={handleChangeZone}
-            >
-              <option disabled value=''>
-                Chọn vùng miền
-              </option>
-              {zonesData.map((zone) => (
-                <option key={zone.id} value={zone.code}>
-                  {zone.name}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className='block mr-5'>
-            <span className="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
-              Tỉnh/Thành Phố
-            </span>
-            <select
-              name='city'
-              value={city}
-              onChange={handleChangeCity}
-              className='mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1'
-            >
-              <option disabled value=''>
-                Chọn tỉnh thành
-              </option>
-              {cities.map((city) => (
-                <option value={city.code} key={city.id}>
-                  {city.name}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className='block'>
-            <span className="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
-              Quận/Huyện
-            </span>
-            <select
-              name='zone'
-              className='mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1'
-              value={ward}
-              onChange={handleChangeWard}
-            >
-              <option disabled value=''>
-                Chọn quận/huyện
-              </option>
-              {wards.map((ward) => (
-                <option value={ward.code} key={ward.id}>
-                  {ward.name}
-                </option>
-              ))}
-            </select>
-          </label>
+    <div className='d-flex align-items-center auth px-0'>
+      <ToastContainer />
+      <div className='row w-100 mx-0'>
+        <div className='col-md-6 mx-auto'>
+          <div className='card pt-0'>
+            <div className='card-body pt-0 pt-4'>
+              <h4 className='card-title' style={{ lineHeight: '28px' }}>
+                Nếu bạn có thắc mắc gì muốn được giải đáp vui lòng liên hệ với
+                chúng tôi bằng cách điền vào các thông tin bên dưới
+              </h4>
+              <form className='forms-sample pt-3' onSubmit={handleSubmit}>
+                <Form.Group>
+                  <label htmlFor='exampleInputUsername1'>Họ Và Tên</label>
+                  <Form.Control
+                    type='text'
+                    id='exampleInputUsername1'
+                    placeholder='Họ và tên'
+                    size='sm'
+                    style={{ borderRadius: '6px' }}
+                    onChange={(e) => setFullname(e.target.value)}
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <label htmlFor='exampleInputEmail1'>Email</label>
+                  <Form.Control
+                    type='email'
+                    className='form-control'
+                    id='exampleInputEmail1'
+                    placeholder='Email'
+                    size='sm'
+                    style={{ borderRadius: '6px' }}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <label htmlFor='exampleInputEmail1'>Điện thoại</label>
+                  <Form.Control
+                    type='text'
+                    className='form-control'
+                    id='exampleInputEmail1'
+                    placeholder='Điện thoại'
+                    size='sm'
+                    style={{ borderRadius: '6px', height: '2.575rem' }}
+                    onChange={(e) => setPhone(e.target.value)}
+                  />
+                </Form.Group>
+
+                <div className='row'>
+                  <div className='col-6'>
+                    <Form.Group>
+                      <label htmlFor='exampleFormControlSelect2'>
+                        Tỉnh/Thành Phố <span style={{ color: 'red' }}>*</span>
+                      </label>
+                      <select
+                        className='form-control'
+                        id='exampleFormControlSelect2'
+                        size='sm'
+                        style={{ borderRadius: '6px', height: '2.575rem' }}
+                        required
+                        name='city'
+                        value={city}
+                        onChange={handleChangeCity}
+                      >
+                        <option disabled value=''>
+                          Chọn tỉnh thành
+                        </option>
+                        {citiesData.map((city) => (
+                          <option value={city.value} key={city.id}>
+                            {city.name}
+                          </option>
+                        ))}
+                      </select>
+                    </Form.Group>
+                  </div>
+                  <div className='col-6'>
+                    <Form.Group required>
+                      <label>
+                        Quận/Huyện <span style={{ color: 'red' }}>*</span>
+                      </label>
+                      <select
+                        className='form-control'
+                        size='sm'
+                        style={{ borderRadius: '6px', height: '2.575rem' }}
+                        name='ward'
+                        value={ward}
+                        onChange={handleChangeWard}
+                      >
+                        <option disabled value=''>
+                          Chọn quận/huyện
+                        </option>
+                        {wards.map((ward) => (
+                          <option value={ward.value} key={ward.id}>
+                            {ward.name}
+                          </option>
+                        ))}
+                      </select>
+                    </Form.Group>
+                  </div>
+                </div>
+
+                <Form.Group>
+                  <label htmlFor='exampleFormControlSelect3'>
+                    Hạng mục thi công
+                  </label>
+                  <select
+                    name='category'
+                    value={category}
+                    className='form-control'
+                    id='exampleFormControlSelect3'
+                    size='sm'
+                    style={{ borderRadius: '6px', height: '2.575rem' }}
+                    onChange={(e) => setCategory(e.target.value)}
+                  >
+                    <option disabled value=''>
+                      Chọn hạng mục thi công
+                    </option>
+                    {LIST_CATEGORY.map((category) => (
+                      <option key={category.id} value={category.id}>
+                        {category.name}
+                      </option>
+                    ))}
+                  </select>
+                </Form.Group>
+
+                <Form.Group>
+                  <label htmlFor='exampleTextarea1'>Textarea</label>
+                  <textarea
+                    className='form-control p-2'
+                    id='exampleTextarea1'
+                    rows='4'
+                    style={{ borderRadius: '6px' }}
+                    onChange={(e) => setNote(e.target.value)}
+                  ></textarea>
+                </Form.Group>
+
+                <div className='row'>
+                  <div className='col d-flex align-items-center justify-content-center'>
+                    <button
+                      type='submit'
+                      className='btn btn-gradient-success btn-rounded mr-2'
+                      style={{ width: '200px' }}
+                    >
+                      Gửi
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
-        <label className='block mb-3'>
-          <span className="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
-            Hạng Mục Thi Công
-          </span>
-          <select
-            name='category'
-            value={category}
-            className='mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1'
-            onChange={handleChangesetCategory}
-          >
-            <option disabled value=''>
-              Chọn hạng mục thi công
-            </option>
-            {categoriesData.map((category) => (
-              <option key={category.id} value={category.code}>
-                {category.name}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label className='block mb-3'>
-          <span className="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
-            Note
-          </span>
-          <textarea
-            name='note'
-            value={note}
-            className='mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1'
-            onChange={handleChangeNote}
-          />
-        </label>
-        <label className='block'>
-          <button
-            className='btn btn-secondary btn-block btn-outline'
-            type='submit'
-          >
-            Submit
-          </button>
-        </label>
-      </form>
+      </div>
     </div>
   );
 };
